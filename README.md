@@ -12,14 +12,15 @@ If you dont have python 3.7 install it via [conda](https://docs.conda.io/en/late
 conda create -n py37
 conda install -n py37 python=3.7
 ```
-### Build a simple tab delimited population file:
+### Build a tab delimited population file:
 ```
 samp1 <\t> population_E
 samp2 <\t> population_E
 samp3 <\t> population_F
 samp4 <\t> population_F
+samp5 <\t> population_R
 ```
-This can be done on the command line or excel, for a further example population file see the ./testData/inputFormats/population.txt
+The population file defines the expected relationship of each sample (column 1) with population (column 2). The above is an example with 5 samples defining 3 different populations. The sample name MUST BE EXACTLY THE SAME as it is in the vcf header line starting with #CHROM<\t>POS<\t>ID... Building a tab delimited text can be done on the command line or via excel, for a further example of a functional population file see the ./testData/inputFormats/population.txt
 
 ## Usage:
 ### Convert your vcf into an arlequin formated diploid file (.arp):
@@ -35,7 +36,7 @@ python /Users/deansanders/Desktop/DS_Github/VCF2ArlequinDiploid/vcf2ArlequinDipl
 #### Pipeline Options:
 
 * --vcf:     The path to the vcf to convert to arlequin format (VCF format >= 4.0)
-* --popFile:      A simple tab delimited file including each samples relationship expected population relationship (see: Build a simple tab delimited population file)
+* --popFile:      A two column tab delimited text file including each samples expected relationship with the other samples in the population.(see: Build a tab delimited population file)
 * --splitContigs:        split the input .vcf data into several output .arp files by contig
 * --debug:       run debug and print every relevant processing field for every individual in each population
 
