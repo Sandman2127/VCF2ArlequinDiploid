@@ -6,6 +6,7 @@ import arpFormat as arp
 parser = argparse.ArgumentParser(description='UWBC BRC tool for Tassel V2 report building')
 parser.add_argument('--vcf', type=str,help='The path to the vcf to convert to arlequin format', required=True)
 parser.add_argument('--popFile', type=str,help='A simple tab delimited file including each samples relationship expected population relationship', required=True)
+parser.add_argument('--debug',action="store_true",help='run debug and print every relevant processing field for every individual in each population', required=False)
 
 args = parser.parse_args()
 vcf = args.vcf
@@ -48,11 +49,9 @@ def findSampCount(population,popMap):
 def findSampleColumn(chrLine,sample):
     pos = 0
     for field in chrLine.split("\t"):
-        pos += 1
-        if str(field) == str(sample):
-            # corrects for list[0] splitting of vcf file
-            pos = pos - 1
+        if str(field.strip()) == str(sample):
             return pos
+        pos += 1
 
 def processGenoField(ref,alt,geno):
     gtOut = []
@@ -71,6 +70,8 @@ def processGenoField(ref,alt,geno):
     return gtOut
 
 def parseVCF(fieldPos,lineSkip):
+    if args.debug:
+        print("Contig:","Position:","refAllele:","altAllele:","genoTypeField:","fieldPos:")
     genotypeList = []
     genotypeA = "" 
     genotypeB = ""
@@ -84,6 +85,8 @@ def parseVCF(fieldPos,lineSkip):
                     # vcf header lines
                     pass
                 else:
+                    contig = str(line.split("\t")[0])
+                    position = str(line.split("\t")[1])
                     refAllele = str(line.split("\t")[3])
                     altAllele = str(line.split("\t")[4])
                     # prevents alternate allele indels from sneaking into the analysis 
@@ -91,6 +94,8 @@ def parseVCF(fieldPos,lineSkip):
                         pass
                     else:
                         genoTypeField = str(line.split("\t")[fieldPos])
+                        if args.debug:
+                            print(contig,position,refAllele,altAllele,genoTypeField,fieldPos)
                         alleleA,alleleB = processGenoField(refAllele,altAllele,genoTypeField)
                         genotypeA = genotypeA + alleleA
                         genotypeB = genotypeB + alleleB
@@ -121,15 +126,15 @@ def main():
         #TODO: parse for samples in the correct population and write them out as we find them
         for samp,sampPop in popMap.items():
             if pop == sampPop:
-                print("[STDOUT]: converting sample data from the sample:",str(samp),"population:",str(sampPop))
+                print("[STDOUT]: converting sample data from the sample:",str(samp),", within population:",str(sampPop))
                 sampColumn = findSampleColumn(chromLine,samp)
-                if sampColumn:
-                    genotypeA,genotypeB = parseVCF(sampColumn,chromLineNo)
-                    sampleData = {samp:[genotypeA,genotypeB]}
-                    #TODO: write out sample data for each individual in the population
-                    arpInst.writeSampleGroupData(pop,sampleData,sampCNT,"SAMPLE",outputARP)
-                else:
-                    print("[STDOUT]: sample data doesnt exist for sample:",str(samp),"population:",str(sampPop),"within vcf:",str(vcf))
+                # if sampColumn:
+                genotypeA,genotypeB = parseVCF(sampColumn,chromLineNo)
+                sampleData = {samp:[genotypeA,genotypeB]}
+                #TODO: write out sample data for each individual in the population
+                arpInst.writeSampleGroupData(pop,sampleData,sampCNT,"SAMPLE",outputARP)
+                # else:
+                #     print("[STDOUT]: sample data doesnt exist for sample:",str(samp),"population:",str(sampPop),"within vcf:",str(vcf))
             else:
                 pass
         #TODO: write out the tail once all samples in the population complete
