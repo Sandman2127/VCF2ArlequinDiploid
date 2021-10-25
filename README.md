@@ -5,7 +5,7 @@ A script designed to convert GBS/RAD/DNASEQ vcf data to arlequin diploid .arp fo
 
 ## Setup
 ### Use >= Python 3.7:
-This program has 0 dependencies, i.e. if you have base python3.7 it will run without issue. It is possible this program will run with any >= py3 version of python, but it hasn't been extensively tested.
+This program has 0 dependencies, i.e. if you have base python 3.7 it will run without issue. It is possible this program will run with any >= py3 version of python, but it hasn't been extensively tested.
 
 If you dont have python 3.7 install it via [conda](https://docs.conda.io/en/latest/miniconda.html):
 ```
@@ -15,7 +15,7 @@ conda install -n py37 python=3.7
 ### Build a simple tab delimited population file:
 ```
 samp1 <\t> population_E
-samp2 <\t>  population_E
+samp2 <\t> population_E
 samp3 <\t> population_F
 samp4 <\t> population_F
 ```
@@ -34,9 +34,9 @@ python /Users/deansanders/Desktop/DS_Github/VCF2ArlequinDiploid/vcf2ArlequinDipl
 
 #### Pipeline Options:
 
-* --vcf:     The path to the vcf to convert to arlequin format
-* --popFile:      A simple tab delimited file including each samples relationship expected population relationship (see population file)
-* --splitContigs:        split output .arp files by contigs for the analysis
+* --vcf:     The path to the vcf to convert to arlequin format (VCF format >= 4.0)
+* --popFile:      A simple tab delimited file including each samples relationship expected population relationship (see: Build a simple tab delimited population file)
+* --splitContigs:        split the input .vcf data into several output .arp files by contig
 * --debug:       run debug and print every relevant processing field for every individual in each population
 
 ### Runtime:
