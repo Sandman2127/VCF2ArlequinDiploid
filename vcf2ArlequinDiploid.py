@@ -147,15 +147,15 @@ def buildARP(popMap,popList,contig):
         #TODO: parse for samples in the correct population and write them out as we find them
         for samp,sampPop in popMap.items():
             if pop == sampPop:
-                print("[STDOUT]: Converting sample data from the sample:",str(samp),", within population:",str(sampPop))
+                print("[STDOUT]: Converting sample data from the sample:",str(samp),",within population:",str(sampPop))
                 sampColumn = findSampleColumn(chromLine,samp)
-                # if sampColumn:
-                genotypeA,genotypeB = parseVCF(sampColumn,chromLineNo,contig)
-                sampleData = {samp:[genotypeA,genotypeB]}
-                #TODO: write out sample data for each individual in the population
-                arpInst.writeSampleGroupData(pop,sampleData,sampCNT,"SAMPLE",outputARP)
-                # else:
-                #     print("[STDOUT]: sample data doesnt exist for sample:",str(samp),"population:",str(sampPop),"within vcf:",str(vcf))
+                if sampColumn:
+                    genotypeA,genotypeB = parseVCF(sampColumn,chromLineNo,contig)
+                    sampleData = {samp:[genotypeA,genotypeB]}
+                    #TODO: write out sample data for each individual in the population
+                    arpInst.writeSampleGroupData(pop,sampleData,sampCNT,"SAMPLE",outputARP)
+                else:
+                    print("[STDERR]: Sample data doesn't exist for sample:",str(samp),"within vcf:",str(vcf),"skipping it and moving on to the next")
             else:
                 pass
         #TODO: write out the tail once all samples in the population complete
