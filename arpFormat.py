@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 class arlequinForm:
-    def __init__(self,title,totalSamp):
+    def __init__(self,title,totalGroups):
         self.sampTitle = title
-        self.noSamp = totalSamp
+        self.noGrp = totalGroups
         self.genoData = 1
         self.gameticPhase = 0
         self.dType = 'DNA'
         self.missData = '\'N\''
         self.locusSep = 'NONE'
-        self.profileString = "[Profile]\n" + "Title=" + "\"" + str(self.sampTitle) + "\"" + "\n" + "NbSamples=" + str(self.noSamp) + "\n" + "GenotypicData=" + str(self.genoData) + "\n" + "GameticPhase=" + str(self.gameticPhase) + "\n" + "DataType=" + str(self.dType) + "\n" + "MissingData=" + self.missData + "\n" + "LocusSeparator=" + str(self.locusSep) + "\n" + '[Data]' + "\n"
+        self.profileString = "[Profile]\n" + "Title=" + "\"" + str(self.sampTitle) + "\"" + "\n" + "NbSamples=" + str(self.noGrp) + "\n" + "GenotypicData=" + str(self.genoData) + "\n" + "GameticPhase=" + str(self.gameticPhase) + "\n" + "DataType=" + str(self.dType) + "\n" + "MissingData=" + self.missData + "\n" + "LocusSeparator=" + str(self.locusSep) + "\n" + '[Data]' + "\n"
 
     def writeArpHeader(self,outputFileObject):
         outputFileObject.write(self.profileString)

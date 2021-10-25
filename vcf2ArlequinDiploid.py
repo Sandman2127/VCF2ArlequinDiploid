@@ -128,7 +128,7 @@ def parseVCF(fieldPos,lineSkip,searchContig):
 
 def buildARP(popMap,popList,contig):
     #TODO: write out the header of our arp file
-    arpInst = arp.arlequinForm("Arlequin SNP analysis",len(popMap))
+    arpInst = arp.arlequinForm("Arlequin SNP analysis",len(popList))
     if contig == "ALL":
         outputName = "contigsCombined.arp"
     else:

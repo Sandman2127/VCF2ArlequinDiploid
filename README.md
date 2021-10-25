@@ -33,7 +33,7 @@ run your vcf2ArlequinDiploid analysis
 python /Users/deansanders/Desktop/DS_Github/VCF2ArlequinDiploid/vcf2ArlequinDiploid.py --vcf SNPs.mergedAll.vcf --popFile population.txt --splitContigs
 ```
 
-#### Pipeline Options:
+#### Program Options:
 
 * --vcf:     The path to the vcf to convert to arlequin format (VCF format >= 4.0)
 * --popFile:      A two column tab delimited text file defining the expected relationship of each sample with the other samples in the population
