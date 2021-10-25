@@ -36,7 +36,7 @@ python /Users/deansanders/Desktop/DS_Github/VCF2ArlequinDiploid/vcf2ArlequinDipl
 #### Pipeline Options:
 
 * --vcf:     The path to the vcf to convert to arlequin format (VCF format >= 4.0)
-* --popFile:      A two column tab delimited text file including each samples expected relationship with the other samples in the population.(see: Build a tab delimited population file)
+* --popFile:      A two column tab delimited text file defining the expected relationship of each sample with the other samples in the population
 * --splitContigs:        split the input .vcf data into several output .arp files by contig
 * --debug:       run debug and print every relevant processing field for every individual in each population
 
